@@ -1,1 +1,1 @@
-<h1>footer</h1>
+<footer class="footer"> © 2022 project-managment by walid yahia mahammed </footer>
