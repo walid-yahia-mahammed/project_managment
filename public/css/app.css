@@ -1,0 +1,11 @@
+.navbar{
+    height: 7vh;
+}
+
+.footer{
+    height: 5vh;
+}
+
+.page-wrapper{
+    min-height: 88vh;
+}
