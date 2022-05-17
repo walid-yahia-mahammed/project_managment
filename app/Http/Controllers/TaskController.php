@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -11,9 +11,10 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $tasks = Task::where('board_id',$id)->get()->all();
+        return view('pages.tasklist',['tasks'=>$tasks]);
     }
 
     /**
@@ -21,7 +22,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
@@ -34,7 +35,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $task = Task::create([
+            'title'         => $request->title,
+            'discription'   => $request->discription,
+            'state'         => "todo",
+            'board_id'      => 1
+        ]);
+        return view('task.index');
     }
 
     /**
