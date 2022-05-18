@@ -7,11 +7,11 @@
     <div class="card-body d-flex">
         <div class="info col-md-10">
             <h5 class="card-title">{{$task->discription}}</h5>
-            <p class="card-text">task last update from {{$task->since[1] }} {{$task->since[0] }}</p>
+            <p class="card-text">task last update from {{$task->since }}</p>
         </div>
         <div class="options col-md-2">
             <button type="button" class="btn btn-danger mb-1" id="delete">delete</button>
-            <button type="button" class="btn btn-primary" id="update">update</button>
+            <button type="button" class="btn btn-primary" onclick="showUpdateModal({{$task->id}})" data-toggle="modal" data-target="#task-creation-Modal">update</button>
         </div>
     </div>
 </div>

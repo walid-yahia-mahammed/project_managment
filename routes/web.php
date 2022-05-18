@@ -18,4 +18,6 @@ Route::get('/', function () {
 })->name('home');
 
 Route::post('task',[TaskController::class,'store'])->name('task.store');
+Route::put('task',[TaskController::class,'update'])->name('task.save');
 Route::get('tasks/{id}',[TaskController::class,'index'])->name('task.index');
+Route::get('task/{id}',[TaskController::class,'show'])->name('task.read');

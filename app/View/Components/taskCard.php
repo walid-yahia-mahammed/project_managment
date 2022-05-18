@@ -27,8 +27,7 @@ class taskCard extends Component
     public function render()
     {
         $task = Task::where('id',$this->taskId)->get()->first();
-        $task->since = $this->updatedsins($task->updated_at);
-        
+        $task->since = $task->updated_at->diffForHumans();
         switch($task->state){
             case 'done':
                 $class = 'badge-success';
@@ -44,7 +43,7 @@ class taskCard extends Component
     }
 
     public function updatedsins($date){
-        $sinces = (array)Carbon::now()->diff($date);
+        $sinces = (array)Carbon::now()->diffFor($date);
         foreach($sinces as $key => $since){
             if($since !=0){
                 return [$key , $since];

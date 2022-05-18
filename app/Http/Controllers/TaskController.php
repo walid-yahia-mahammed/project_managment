@@ -13,8 +13,14 @@ class TaskController extends Controller
      */
     public function index($id)
     {
-        $tasks = Task::where('board_id',$id)->get()->all();
+        $tasks = Task::where('board_id',$id)->orderBy('updated_at','desc')->get()->all();
         return view('pages.tasklist',['tasks'=>$tasks]);
+    }
+
+    public function updateLable($taskId,$lable){
+        $task = Task::find($taskId);
+        $task->state = $lable;
+        $task->save();
     }
 
     /**
@@ -35,14 +41,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         $task = Task::create([
             'title'         => $request->title,
             'discription'   => $request->discription,
             'state'         => "todo",
             'board_id'      => 1
         ]);
-        return view('task.index');
+        return true;
     }
 
     /**
@@ -53,7 +58,8 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = Task::find($id);
+        return $task;
     }
 
     /**
@@ -74,9 +80,16 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        return true;
+        $task = Task::create([
+            'title'         => $request->title,
+            'discription'   => $request->discription,
+            'state'         => "todo",
+            'board_id'      => 1
+        ]);
+        return true;
     }
 
     /**

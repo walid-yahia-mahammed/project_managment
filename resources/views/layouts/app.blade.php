@@ -9,24 +9,26 @@
     <link rel="stylesheet" href={{ URL::asset('css/app.css') }}>
 </head>
 <body>
-<div class="container">
-    
-    
-    <div id="main-wrapper">
+    <div class="container">
+        
+        
+        <div id="main-wrapper">
 
-        <!-- navbar layout -->
-        @include('layouts.navbar')
+            <!-- navbar layout -->
+            @include('layouts.navbar')
 
-        <!-- content layout -->
-        <div class="page-wrapper col-md-10 offset-md-1">
-            @yield('content')
+            <!-- content layout -->
+            <div class="page-wrapper col-md-10 offset-md-1">
+                @yield('content')
+            </div>
+
+            <!-- footer layout -->
+            @include('layouts.footer')
+            
         </div>
-
-        <!-- footer layout -->
-        @include('layouts.footer')
-    </div>
     </div>
     <script src={{ URL::asset("js/jquery.min.js") }}></script>
     <script src={{ URL::asset("js/bootstrap.min.js") }}></script>
+    @stack('custom-scripts')
 </body>
 </html>
