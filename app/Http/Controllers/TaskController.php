@@ -17,13 +17,7 @@ class TaskController extends Controller
         return view('pages.tasklist',['tasks'=>$tasks]);
     }
 
-    public function updateLable($taskId,$lable){
-        $task = Task::find($taskId);
-        $task->state = $lable;
-        $task->save();
-    }
-
-    /**
+        /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -82,12 +76,10 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
-        $task = Task::create([
-            'title'         => $request->title,
-            'discription'   => $request->discription,
-            'state'         => "todo",
-            'board_id'      => 1
-        ]);
+        $task = Task::find($request->taskId);
+        $task->title = $request->title;
+        $task->discription = $request->discription;
+        $task->save();
         return true;
     }
 
@@ -100,6 +92,13 @@ class TaskController extends Controller
     public function destroy($id)
     {
         Task::where('id',$id)->delete();
+        return true;
+    }
+
+    public function updateLable(Request $request){
+        $task = Task::find($request->taskId);
+        $task->state = $request->lable;
+        $task->save();
         return true;
     }
 }

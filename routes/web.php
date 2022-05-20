@@ -22,3 +22,4 @@ Route::put('task',[TaskController::class,'update'])->name('task.save');
 Route::get('tasks/{id}',[TaskController::class,'index'])->name('task.index');
 Route::get('task/{id}',[TaskController::class,'show'])->name('task.read');
 Route::delete('tasks/{id}',[TaskController::class,'destroy'])->name('task.destroy');
+Route::put('task/lable',[TaskController::class,'updateLable'])->name('lable.update');

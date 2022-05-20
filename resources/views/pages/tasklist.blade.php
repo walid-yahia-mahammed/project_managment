@@ -8,8 +8,19 @@
     <div class="tasks">
         @foreach($tasks as $task)
         <div id="task_{{$task->id}}" class="card mb-4 d-flex">
-            <div class="card-header">
-                <h1>{{$task->title}} <span class="badge badge-pill badge-success">{{$task->state}}</span></h1>  
+            <div class="card-header row">
+                <div class="col-md-7">
+                    <h1>{{$task->title}}</h1>
+                </div>
+                <div class="col-md-4 mt-4 mb-4 row">
+                    <span class="col-md-3 ml-1 badge badge-pill badge-success">{{$task->state}}</span> 
+                    <select class="col-md-8" name="task_lable" data-id="{{$task->id}}">
+                        <option selected>change lable</option>
+                        <option value="todo">todo</option>
+                        <option value="doing">doing</option>
+                        <option value="done">done</option>
+                    </select>
+                </div> 
             </div>
             <div class="card-body d-flex">
                 <div class="info col-md-10">
@@ -56,9 +67,12 @@
 
 @push('custom-scripts')
 <script>
-$(":submit").on('click',(e)=>{
-    e.preventDefault();
-})
+    $(":submit").on('click',(e)=>{
+        e.preventDefault();
+    })
+    $('[name="task_lable"]').change((e)=>{
+        updateLable(e.target.getAttribute('data-id'),e.target.value);
+    })
     function showCreateModal(){
         $('[name="title"]').val('')
         $('[name="discription"]').val('')
@@ -134,13 +148,36 @@ $(":submit").on('click',(e)=>{
             };
 
         $.ajax({
-            type: 'POST',
+            type: 'put',
             url: "{{route('task.save')}}",
             data: data,
             dataType: 'json',
             success:function(response){
                 if(response){
-                    location.reload();
+                   location.reload();
+                }
+            },
+            catch(err){
+                console.log(err);
+            }
+        });
+    }
+
+    function updateLable(id,value){
+        let data = {
+            "_token"        :"{{ csrf_token() }}",
+            "taskId"        : id,
+            "lable"         : value
+            };
+
+        $.ajax({
+            type: 'put',
+            url: "{{route('lable.update')}}",
+            data: data,
+            dataType: 'json',
+            success:function(response){
+                if(response){
+                   location.reload();
                 }
             },
             catch(err){
