@@ -7,7 +7,21 @@
     </div>
     <div class="tasks">
         @foreach($tasks as $task)
-            <x-task-card taskId="{{$task->id}}"/>
+        <div id="task_{{$task->id}}" class="card mb-4 d-flex">
+            <div class="card-header">
+                <h1>{{$task->title}} <span class="badge badge-pill badge-success">{{$task->state}}</span></h1>  
+            </div>
+            <div class="card-body d-flex">
+                <div class="info col-md-10">
+                    <h5 class="card-title">{{$task->discription}}</h5>
+                    <p class="card-text">task last update from {{$task->updated_at->diffForHumans(); }}</p>
+                </div>
+                <div class="options col-md-2">
+                    <button type="button" class="btn btn-danger mb-1" id="delete" onclick="DeleteTask({{$task->id}})">delete</button>
+                    <button type="button" class="btn btn-primary" onclick="showUpdateModal({{$task->id}})" data-toggle="modal" data-target="#task-creation-Modal">update</button>
+                </div>
+            </div>
+        </div>
         @endforeach
     </div>
     <!-- Modal -->
@@ -68,11 +82,29 @@ $(":submit").on('click',(e)=>{
                 console.log(err);
             }
         });
+    }
+    function DeleteTask(id){
+        if(confirm("Are you sure you want to delete this?")){
+            
+            url = `{{route('home')}}/tasks/${id}`;
+            $.ajax({
+            type: 'DELETE',
+            url: url,
+            data: {"_token" :"{{ csrf_token() }}"},
+            dataType: 'json',
+            success:function(response){
+                if(response){
+                    $(`#task_${id}`).remove();
+                }
+            },
+            catch(err){
+                console.log(err);
+            }
+        });
+        }
         
     }
-
     function createTask(){
-        console.log("hhhhhhhhhhhhhhh");
         let data = {
             "_token"    : "{{ csrf_token() }}",
             "title"       : $("[name='title']").val(),

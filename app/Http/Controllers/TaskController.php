@@ -82,7 +82,6 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
-        return true;
         $task = Task::create([
             'title'         => $request->title,
             'discription'   => $request->discription,
@@ -100,6 +99,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::where('id',$id)->delete();
+        return true;
     }
 }
